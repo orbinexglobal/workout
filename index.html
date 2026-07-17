@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Workout OS — Premium Daily Fitness Dashboard</title>
+  <meta name="description" content="A premium 90-day static gym dashboard for zero equipment workouts at home. APT posture alignment, active recovery trackers, rest timers, and streak systems.">
+  <link rel="stylesheet" href="style.css">
+  
+  <!-- Apple Web App Metadata -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="theme-color" content="#050508">
+</head>
+<body>
+
+  <!-- Top Page Glowing Progress Bar -->
+  <div id="top-bar-progress" class="top-bar-progress"></div>
+
+  <!-- Confetti Celebration Canvas -->
+  <canvas id="confetti-canvas"></canvas>
+
+  <div class="app-container">
+    
+    <!-- ── APPLICATION HEADER ── -->
+    <header class="app-header">
+      <div class="header-main">
+        <div class="brand-section">
+          <h1 class="app-title">WORKOUT OS <span class="badge">90 DAYS</span></h1>
+          <div class="greeting-text">
+            <span id="greeting">Morning, Champion</span> • <span id="header-date">Daily Dashboard</span>
+          </div>
+        </div>
+        <div class="stats-badge-container">
+          <div class="stat-badge streak" title="Your consecutive daily completion streak!" onclick="document.querySelector('.nav-tab-btn[data-tab=\'progress\']').click()" style="cursor: pointer;">
+            <span class="icon">🔥</span>
+            <span id="header-streak-count">0 DAY STREAK</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- ── STICKY TABS NAVIGATION ── -->
+    <div class="nav-tabs-wrapper">
+      <nav class="nav-tabs">
+        <button class="nav-tab-btn active" data-tab="today">
+          <span class="icon">⚡</span>Today
+        </button>
+        <button class="nav-tab-btn" data-tab="weekly">
+          <span class="icon">📅</span>Weekly Split
+        </button>
+        <button class="nav-tab-btn" data-tab="posture">
+          <span class="icon">🧍</span>Posture Routine
+        </button>
+        <button class="nav-tab-btn" data-tab="muscles">
+          <span class="icon">💪</span>Muscle Map
+        </button>
+        <button class="nav-tab-btn" data-tab="recovery">
+          <span class="icon">🔋</span>Recovery
+        </button>
+        <button class="nav-tab-btn" data-tab="progress">
+          <span class="icon">📈</span>Progress
+        </button>
+      </nav>
+    </div>
+
+    <!-- ══════════════════════════════════════
+         TAB 1: TODAY'S WORKOUT DASHBOARD
+    ══════════════════════════════════════ -->
+    <main id="section-today" class="app-section active">
+      
+      <!-- Day Switch Warning Pill -->
+      <div id="view-day-badge" class="meta-pill" style="display:none; background:rgba(251,191,36,0.1); border-color:rgba(251,191,36,0.2); color:#fbbf24; margin-bottom:12px; font-weight:700;">
+        Viewing Another Day's Workout
+      </div>
+
+      <!-- Premium Today's Hero Card -->
+      <section class="glass-card intensity-glow">
+        <div class="today-hero-layout">
+          <div>
+            <div class="hero-subtitle">
+              <span class="icon">🚀</span><span id="hero-weekday">Monday Split</span>
+            </div>
+            <h2 class="hero-title" id="hero-workout-type">HEIGHT GROWTH CIRCUIT</h2>
+            <div class="hero-meta">
+              <span class="meta-pill" id="hero-focus">GH Spike • Spine Length • Bone Loading</span>
+              <span class="meta-pill" id="hero-duration">Approx. 30 Minutes</span>
+              <span class="meta-pill intensity-pill" id="hero-intensity">High Intensity</span>
+            </div>
+            <p class="motivational-quote" id="quote-text">
+              "The body achieves what the mind believes."
+            </p>
+          </div>
+          
+          <!-- Animated Progress Ring -->
+          <div class="progress-ring-container">
+            <svg class="progress-ring-svg">
+              <circle class="progress-ring-circle-bg" cx="75" cy="75" r="64" />
+              <circle class="progress-ring-circle" id="progress-ring-circle" cx="75" cy="75" r="64" />
+            </svg>
+            <div class="progress-ring-text">
+              <span class="progress-ring-percentage" id="progress-ring-percent">0%</span>
+              <span class="progress-ring-label" id="progress-ring-label">0 of 4 Done</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Daily Timeline: Wake, Minoxidil, Posture, Workout, Wind-down -->
+      <section class="exercise-section">
+        <div class="section-title-container">
+          <h3 class="section-title">🕐 Today's Timeline</h3>
+          <span class="section-subtitle">Minoxidil once at 5:30 AM only — no night dose, light layer only</span>
+        </div>
+        <div class="daily-schedule-timeline" id="daily-schedule-list">
+          <!-- Dynamic rendering via JS -->
+        </div>
+      </section>
+
+      <!-- Active Workout Exercise List -->
+      <section class="exercise-section">
+        <div class="section-title-container">
+          <h3 class="section-title">🏃 Session Movements</h3>
+          <span class="section-subtitle">Click card to reveal step-by-step guidance</span>
+        </div>
+        <div class="exercise-list" id="today-exercise-list">
+          <!-- Dynamic rendering via JS -->
+        </div>
+      </section>
+    </main>
+
+    <!-- ══════════════════════════════════════
+         TAB 2: WEEKLY PLAN & OVERVIEW
+    ══════════════════════════════════════ -->
+    <section id="section-weekly" class="app-section">
+      <h3 class="section-title" style="margin-bottom:12px">📅 7-Day Calendar Overview</h3>
+      <p class="greeting-text" style="margin-bottom:20px">Click any day to instantly switch and complete that day's scheduled split!</p>
+
+      <!-- Calendar Switcher Grid -->
+      <div class="weekly-calendar-grid" id="weekly-calendar">
+        <!-- Rendered in JS -->
+      </div>
+
+      <!-- Home Replacement Explanation -->
+      <section class="glass-card">
+        <h3 class="section-title" style="margin-bottom:12px">⚡ Fully Calibrated For Home</h3>
+        <p class="details-text" style="color:var(--text-muted); margin-bottom:16px">
+          The original outdoor and equipment-based exercises have been dynamically swapped with high-performance home substitutes targeting exact biomechanical loads. No bars, pulls, or branches needed.
+        </p>
+        <div class="swaps-container" id="swaps-comparison">
+          <!-- Swaps list rendered in JS -->
+        </div>
+      </section>
+    </section>
+
+    <!-- ══════════════════════════════════════
+         TAB 3: MORNING POSTURE ROUTINE
+    ══════════════════════════════════════ -->
+    <section id="section-posture" class="app-section">
+      <!-- APT Alert Warning -->
+      <div class="apt-warning-box">
+        <div class="icon">⚠️</div>
+        <div class="apt-warning-content">
+          <h4>Spinal Decompression & APT Reversal</h4>
+          <p>
+            Anterior Pelvic Tilt (APT) from sedentary sitting shortens your posture, compresses spinal discs, and hides 1.5–2.5 cm of your natural vertical height. Perform this 12-minute sequence <strong>every morning</strong> immediately upon waking to unlock your skeletal potential.
+          </p>
+        </div>
+      </div>
+
+      <div class="section-title-container">
+        <h3 class="section-title">🧍 Posture Exercises</h3>
+        <span class="section-subtitle">Perform sequentially • Check off when finished</span>
+      </div>
+
+      <!-- Posture Steps Container -->
+      <div id="posture-steps">
+        <!-- Rendered in JS -->
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════
+         TAB 4: MUSCLE MAP SPECIFICS
+    ══════════════════════════════════════ -->
+    <section id="section-muscles" class="app-section">
+      <h3 class="section-title" style="margin-bottom:12px">💪 Global Muscle Alignment</h3>
+      <p class="greeting-text" style="margin-bottom:20px">Every muscle group is systematically engaged throughout the weekly cycle to ensure balanced muscle hypertrophy and perfect joint stabilization.</p>
+
+      <div class="muscle-grid" id="muscle-group-map">
+        <!-- Rendered in JS -->
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════
+         TAB 5: ACTIVE RECOVERY STATUS
+    ══════════════════════════════════════ -->
+    <section id="section-recovery" class="app-section">
+      
+      <div class="recovery-grid">
+        
+        <!-- Hydration Dashboard Card -->
+        <div class="glass-card" style="margin-bottom: 0;">
+          <h3 class="section-title">💧 Hydration tracker</h3>
+          <p class="greeting-text" style="margin-bottom:14px">Anabolic synthesis demands water. Target: 3.5 Liters daily.</p>
+          
+          <div class="hydration-visual-container">
+            <!-- Glass graphic container -->
+            <div class="water-bottle-glass">
+              <div id="water-fill-level" class="water-level"></div>
+            </div>
+            <div class="hydration-stats">
+              <span class="hydration-amount" id="water-val-display">0 ml</span>
+              <span class="hydration-target">of 3500 ml Goal</span>
+              
+              <div class="hydration-controls">
+                <button class="log-water-btn" onclick="logHydration(250)">+250ml</button>
+                <button class="log-water-btn" onclick="logHydration(500)">+500ml</button>
+                <button class="log-water-btn" onclick="logHydration(0)" style="color:var(--text-dark); border-color:transparent; background:transparent">Reset</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sleep Dashboard Card -->
+        <div class="glass-card" style="margin-bottom: 0;">
+          <h3 class="section-title">😴 Deep Sleep Log</h3>
+          <p class="greeting-text" style="margin-bottom:14px">Growth hormone spikes heavily during deep REM states. Target: 8.5+ hrs.</p>
+          
+          <div class="sleep-slider-container">
+            <div class="sleep-value-display" id="sleep-hours-display">7.5 hrs</div>
+            <input type="range" class="sleep-slider" id="sleep-range-slider" min="4" max="11" step="0.5" oninput="handleSleepSliderChange(this.value)">
+          </div>
+          <div class="sleep-feedback" id="sleep-feedback-text">
+            ⚠️ Borderline rest state.
+          </div>
+        </div>
+
+        <!-- Recovery Score Card -->
+        <div class="glass-card" style="grid-column: 1 / -1;">
+          <h3 class="section-title">🔋 Central Nervous System Recovery</h3>
+          <p class="greeting-text" style="margin-bottom:14px">Live score representing muscle repair status based on sleep depth, water levels, posture alignment, and recovery activities.</p>
+          
+          <div style="display:flex; flex-wrap:wrap; gap:32px; justify-content:space-around; align-items:center;">
+            
+            <div class="recovery-score-display">
+              <div class="recovery-score-ring" id="recovery-dial">
+                <div class="recovery-score-inner">
+                  <span class="recovery-score-num" id="recovery-score-number">0</span>
+                  <span class="recovery-score-lbl">Score</span>
+                </div>
+              </div>
+            </div>
+
+            <div style="flex-grow:1; max-width:320px;">
+              <div class="recovery-status-desc" id="recovery-status-description">
+                Loading CNS status metrics...
+              </div>
+              
+              <!-- Check list habits -->
+              <div class="recovery-checklist">
+                <label class="checklist-item" id="chk-label-walk">
+                  <input type="checkbox" id="chk-walk">
+                  <span class="checklist-text">Completed 20-30 min circulation walk</span>
+                </label>
+                <label class="checklist-item" id="chk-label-minoxidil">
+                  <input type="checkbox" id="chk-minoxidil">
+                  <span class="checklist-text">Applied Minoxidil (5:30 AM, once daily, light layer)</span>
+                </label>
+                <label class="checklist-item" id="chk-label-screens">
+                  <input type="checkbox" id="chk-screens">
+                  <span class="checklist-text">Dimmed screens / Wind-down by 21:00</span>
+                </label>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════
+         TAB 6: PROGRESS METRICS & HISTORY
+    ══════════════════════════════════════ -->
+    <section id="section-progress" class="app-section">
+      
+      <!-- Premium Stats Grid -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-card-title">Completed Streaks</div>
+          <div class="stat-card-value" id="progress-streak">0</div>
+          <div class="stat-card-subtitle">Consecutive Days</div>
+        </div>
+        <div class="stat-card" style="border-color: rgba(16, 185, 129, 0.15)">
+          <div class="stat-card-title">Completed Exercises</div>
+          <div class="stat-card-value" id="progress-exercises" style="color:var(--accent-green)">0</div>
+          <div class="stat-card-subtitle">Accumulated reps + hold targets</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-title">Avg Hydration Logged</div>
+          <div class="stat-card-value" id="progress-avg-water" style="color:var(--accent-blue)">0.0 L</div>
+          <div class="stat-card-subtitle">Based on active tracker records</div>
+        </div>
+      </div>
+
+      <!-- Weekly Progress Log -->
+      <div class="glass-card">
+        <h3 class="section-title" style="margin-bottom:12px">📈 Historical Progression Grid</h3>
+        <p class="greeting-text" style="margin-bottom:16px">Track your workout completion logs for the last 7 calendar days. Streak logic resets if a scheduled active workout is left incomplete.</p>
+        
+        <div class="history-calendar-weeks" id="progress-history-calendar">
+          <!-- Calendar entries generated dynamically in JS -->
+        </div>
+      </div>
+
+      <!-- Reset Option -->
+      <button class="reset-data-btn" onclick="clearAllAppData()">
+        ⚠️ Hard Reset App Data
+      </button>
+    </section>
+
+    <!-- ── REST PERIOD TIMER OVERLAY MODAL ── -->
+    <div id="timer-overlay" class="timer-overlay">
+      <div class="timer-card">
+        <div class="timer-card-title">REST IN PROGRESS</div>
+        <div class="timer-circular-container">
+          <svg class="timer-svg">
+            <circle class="timer-bg-circle" cx="100" cy="100" r="90" />
+            <circle class="timer-progress-circle" id="timer-progress-circle" cx="100" cy="100" r="90" />
+          </svg>
+          <div class="timer-digits">
+            <span class="timer-time" id="timer-digits">01:30</span>
+            <span class="timer-exercise" id="timer-exercise-name">Resting...</span>
+          </div>
+        </div>
+        <div class="timer-controls">
+          <button class="timer-btn" id="timer-toggle-btn" onclick="toggleRestTimer()">⏸ Pause</button>
+          <button class="timer-btn primary" onclick="skipRestTimer()">▶ Skip Rest</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── WORKOUT COMPLETED CELEBRATION MODAL ── -->
+    <div id="celebration-overlay" class="celebration-overlay">
+      <div class="celebration-card">
+        <div class="celebration-badge">🏆</div>
+        <h2 class="celebration-title">SESSION COMPLETE</h2>
+        <div class="celebration-message">
+          Sensational effort! You completed every movement in today's split perfectly. Your streak and logs have been updated locally. Keep pushing tomorrow!
+        </div>
+        
+        <div class="celebration-stats-row">
+          <div class="celebration-stat-box">
+            <div class="celebration-stat-lbl">Active Streak</div>
+            <div class="celebration-stat-val"><span id="celebration-streak">1</span> <span class="small">Days</span></div>
+          </div>
+          <div class="celebration-stat-box">
+            <div class="celebration-stat-lbl">Movements done</div>
+            <div class="celebration-stat-val" style="color:var(--accent-green)"><span id="celebration-ex-count">4</span></div>
+          </div>
+          <div class="celebration-stat-box">
+            <div class="celebration-stat-lbl">Duration</div>
+            <div class="celebration-stat-val"><span id="celebration-duration">28</span> <span class="small">min</span></div>
+          </div>
+        </div>
+        
+        <button class="celebration-close-btn" onclick="closeCelebration()">CONQUERED</button>
+      </div>
+    </div>
+
+    <!-- ── APPLICATION FOOTER ── -->
+    <footer class="app-footer">
+      <p>Workout OS © 2026. Stand tall. Live strong.</p>
+      <p style="font-size:10px; opacity: 0.5;">Educational content only • Not medical advice • Designed for Student Dorm Lifestyles</p>
+    </footer>
+
+  </div>
+
+  <!-- Loading Core Scripts -->
+  <script src="data/workouts.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
